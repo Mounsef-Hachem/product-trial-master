@@ -45,6 +45,12 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 product.file.path=lien/products.json #(par exemple : C:/Users/Bureau/product-trial-master/back/products.json )
 ```
 
+#### Note importante
+Le fichier JSON utilisé pour stocker les produits doit impérativement être placé en dehors de la solution (par exemple, sur votre bureau ou dans un autre répertoire externe) afin d'assurer que les opérations CRUD sur ce fichier fonctionnent correctement.
+
+#### Cause d'erreur possible
+- Si le fichier JSON est placé au sein de la solution (par exemple, dans le dossier src/main/resources) avant la compilation, il sera inclus dans le build final de l'application, souvent en tant que ressource read-only (lecture seule). Cela empêchera toute modification ou mise à jour via les opérations CRUD, entraînant des erreurs lors des tentatives d'écriture ou de suppression des données. Pour éviter cela, il est fortement recommandé de placer le fichier en dehors de la solution.
+
 ## Swagger
 L'application fournit une API RESTful pour gérer les produits. 
 Vous pouvez accéder à la documentation Swagger à l'adresse suivante : http://localhost:8080/swagger-ui/index.html.

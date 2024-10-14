@@ -18,7 +18,7 @@ export class CartComponent implements OnInit {
   totalQuantity: number = 0;
 
   ngOnInit() {
-    this.cartItems = this.cartService.getItems();    
+    this.cartItems = this.cartService.getItems();
   }
 
   public clearCart() {
@@ -34,12 +34,12 @@ export class CartComponent implements OnInit {
 
 public onRemoveFromCart(productId: number) {
   this.cartService.removeFromCart(productId);
-  this.cartItems = this.cartService.getItems();  // Actualise la liste des produits
+  this.cartItems = this.cartService.getItems();  // Refresh the product list
 }
 
 public updateCartItemQuantity(product: Product, quantity: number) {
   this.cartService.updateQuantity(product.id, quantity);
-  this.cartItems = this.cartService.getItems();  // Actualiser les articles du panier
+  this.cartItems = this.cartService.getItems();  // Refresh cart items
 }
 
 }

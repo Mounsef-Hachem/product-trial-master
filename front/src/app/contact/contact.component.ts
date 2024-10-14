@@ -31,13 +31,13 @@ export class ContactComponent {
 
   onSubmit() {
     if (this.contactForm.valid) {
-      // Simuler l'envoi du formulaire (vous pouvez intégrer une API ici)
+      // Simulate sending the form
       this.successMessage = true;
 
-      // Réinitialiser le formulaire après l'envoi
+      // Reset form after submission
       this.contactForm.reset();
 
-      // Masquer le message de succès après un certain délai
+      // Hide success message after a certain time
       setTimeout(() => {
         this.successMessage = false;
       }, 3000);

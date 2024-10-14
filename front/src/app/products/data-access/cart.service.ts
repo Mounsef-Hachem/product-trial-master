@@ -16,11 +16,11 @@ export class CartService {
   addToCart(product: Product, quantity: number) {
 
     const existingProduct = this.items.find(item => item.product.id === product.id);
-    
+
     if (existingProduct) {
-      existingProduct.quantity += quantity; // Ajouter la quantité sélectionnée
+      existingProduct.quantity += quantity; // Add the selected quantity
   } else {
-      this.items.push({ product, quantity }); // Ajouter un nouvel élément avec la quantité choisie
+      this.items.push({ product, quantity }); // Add a new item with the chosen quantity
   }
     this.updateTotalQuantity(); // Update the total quantity
     console.log(`${product.name} has been added to the cart.`);
@@ -51,20 +51,20 @@ export class CartService {
 
   updateQuantity(productId: number, quantity: number) {
     const productToUpdate = this.items.find(item => item.product.id === productId);
-  
+
     if (productToUpdate) {
-      // Si la quantité mise à jour est supérieure à 0, on met à jour la quantité
+      // If the updated quantity is greater than 0, we update the quantity
       if (quantity > 0) {
         productToUpdate.quantity = quantity;
       } else {
-        // Si la quantité est égale ou inférieure à 0, on retire le produit du panier
+        // If the quantity is equal to or less than 0, the product is removed from the cart
         this.removeFromCart(productId);
       }
-      this.updateTotalQuantity(); // Met à jour la quantité totale dans le panier
+      this.updateTotalQuantity(); // Updates the total quantity in the cart
     } else {
-      console.log(`Le produit avec l'ID ${productId} n'est pas dans le panier.`);
+      console.log(`The product with ID ${productId} is not in the cart.`);
     }
   }
-  
+
 
 }

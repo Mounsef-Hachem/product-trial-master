@@ -53,14 +53,12 @@ public class ProductService {
         }
     }
 
-    public Optional<ProductDTO> getProductById(Long id, StorageTypeEnum storageType) throws IOException {
+    public ProductDTO getProductById(Long id, StorageTypeEnum storageType) throws IOException {
         if (JSON.equals(storageType)) {
-            return Optional.of(
-                    getAllProducts(JSON).stream().filter(p -> p.getId().equals(id)).findFirst())
+            return getAllProducts(JSON).stream().filter(p -> p.getId().equals(id)).findFirst()
                     .orElseThrow(()->new GetProductException("Product with ID " + id + " not found"));
         } else if (DATABASE.equals(storageType)) {
-            return Optional.of(
-                    productRepository.findById(id).map(ProductMapper::toDTO))
+            return productRepository.findById(id).map(ProductMapper::toDTO)
                     .orElseThrow(()->new GetProductException("Product with ID " + id + " not found"));
         }else {
             throw new UnsupportedStorageTypeException("Unsupported storage type: " + storageType);
@@ -75,7 +73,7 @@ public class ProductService {
 
     public ProductDTO updateProduct(Long id, ProductDTO updatedProduct, StorageTypeEnum storageType){
         return handleUpdateProduct(id,updatedProduct,storageType)
-                .orElseThrow();
+                .orElseThrow(()->new UpdateProductException("Failed to update product with id "+id));
     }
 
     public boolean deleteProduct(Long id, StorageTypeEnum storageType) throws IOException {

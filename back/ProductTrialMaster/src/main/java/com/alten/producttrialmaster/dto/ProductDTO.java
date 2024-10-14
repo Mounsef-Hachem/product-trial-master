@@ -1,14 +1,15 @@
 package com.alten.producttrialmaster.dto;
 
-import com.alten.producttrialmaster.entity.Product;
 import com.alten.producttrialmaster.enums.InventoryStatusEnum;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
@@ -18,13 +19,13 @@ public class ProductDTO {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
-    @NotBlank(message = "Product code is required.")
+    @NotEmpty
     private String code;
-    @NotBlank(message = "Product name is required.")
+    @NotEmpty
     private String name;
     private String description;
     private String image;
-    @NotBlank(message = "Category is required.")
+    @NotEmpty
     private String category;
     @Min(value = 0, message = "Price can't be negative.")
     private Double price;

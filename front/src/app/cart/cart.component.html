@@ -1,0 +1,52 @@
+<div class="container h-full">
+
+    <h1 class="text-center font-bold text-2xl mb-6">Votre Pannier</h1>
+
+    <div *ngIf="cartItems.length === 0" class="text-center text-lg text-gray-600">
+        Votre pannier est vide!
+    </div>
+
+    <div *ngIf="cartItems.length > 0" class="m-3">
+        <div>
+            <div *ngFor="let item of cartItems" class="p-2 mt-2 border rounded-lg shadow-lg flex">
+                <!-- Product Image -->
+                <div class="w-1/2 mr-2 product-img">
+                    <img src="assets/images/{{ item.product.image }}" alt="{{ item.product.name }}" class="w-full h-48 object-cover rounded-lg" />
+                </div>
+
+                <!-- Product Details -->
+                <div class="w-1/2 p-2">
+                    <div>
+                        <h2 class="font-semibold text-xl">{{ item.product.name }}</h2>
+                        <p class="text-gray-600">{{ item.product.price }} MAD</p>
+                    </div>
+
+                     <!-- Quantity Selector -->
+                <div class="flex items-center mt-2">
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" [(ngModel)]="item.quantity" min="1" class="p-inputtext w-1/4 ml-2">
+                </div>
+
+                    <p class="text-lg font-bold text-gray-800">{{ item.quantity }} x {{ item.product.price }} MAD</p>
+                    
+                    <button 
+                    (click)="onRemoveFromCart(item.product.id)" 
+                    class="mt-4 p-2 bg-red-500 text-white rounded-lg">
+                    Supprimer
+                </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <h2 class="font-bold text-lg">Total: {{ calculateTotal() }} MAD</h2>
+        </div>
+        
+        <button 
+            (click)="clearCart()" 
+            class="mt-4 p-2 bg-red-500 text-white rounded-lg">
+            Vider le panier
+        </button>
+    </div>
+
+</div>

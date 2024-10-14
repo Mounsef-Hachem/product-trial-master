@@ -1,0 +1,53 @@
+<div class="max-w-md mx-auto mt-10 p-4 border rounded-lg shadow-lg">
+    <h1 class="text-2xl font-bold mb-4 text-center">Contactez-nous</h1>
+    
+    <form (ngSubmit)="onSubmit()" [formGroup]="contactForm">
+      <!-- Email Field -->
+      <div class="mb-4">
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <input 
+          id="email" 
+          type="email" 
+          formControlName="email" 
+          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500"
+          placeholder="Votre email"
+        />
+        <div *ngIf="email!.invalid && (email!.dirty || email!.touched)" class="text-red-500 text-sm">
+          <span *ngIf="email!.errors?.required">L'email est obligatoire.</span>
+          <span *ngIf="email!.errors?.email">L'email n'est pas valide.</span>
+        </div>
+      </div>
+  
+      <!-- Message Field -->
+      <div class="mb-4">
+        <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+        <textarea 
+          id="message" 
+          rows="4" 
+          formControlName="message" 
+          class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-indigo-500 focus:border-indigo-500"
+          placeholder="Votre message"
+        ></textarea>
+        <div *ngIf="message!.invalid && (message!.dirty || message!.touched)" class="text-red-500 text-sm">
+          <span *ngIf="message!.errors?.required">Le message est obligatoire.</span>
+          <span *ngIf="message!.errors?.maxlength">Le message ne peut pas dépasser 300 caractères.</span>
+        </div>
+      </div>
+  
+      <!-- Submit Button -->
+      <button 
+        type="submit" 
+        [disabled]="contactForm.invalid" 
+        class="p-2 bg-primary text-white font-bold hover:bg-blue-800"
+      >
+        Envoyer
+      </button>
+
+    </form>
+  
+    <!-- Success Message -->
+    <div *ngIf="successMessage" class="mt-4 p-2 bg-green-100 text-green-800 text-center rounded-md">
+      Demande de contact envoyée avec succès !
+    </div>
+  </div>
+  

@@ -1,0 +1,85 @@
+<h1 class="text-center">Liste des produits</h1>
+
+<p-button label="Créer produit" (onClick)="onCreate()" class="block text-center"></p-button>
+
+<input 
+    type="text" 
+    placeholder="Search products..." 
+    (input)="filterProducts($event)" 
+    class="m-4 p-inputtext"
+/>
+
+<p-dataView #dv [value]="products">
+    <ng-template pTemplate="list" let-products>
+        <p-card *ngFor="let product of products; " class="block mb-2">
+            <div class="flex p-4">
+                <!-- Product Image -->
+                <div class="w-1/2 mr-4">
+                    <img src="assets/images/{{ product.image }}" alt="{{ product.name }}" class="product-img object-cover rounded-lg" />
+                </div>
+            
+                <!-- Product Details -->
+                <div class="w-1/2 ">
+                    <span class="font-medium text-secondary text-sm">{{ product.category }}</span>
+                    <div class="font-medium text-secondary text-sm">Code: {{ product.code }}</div>
+                    <div class="text-xl font-bold text-900 mt-1">{{ product.name }}</div>
+                    <div class="text-sm font-medium text-900 mt-1 line-clamp-2">{{ product.description }}</div>
+                    
+                    <!-- Price -->
+                    <div class="mt-2 flex justify-between items-center">
+                        <div class="text-lg font-bold text-900">Price: {{ product.price }} MAD</div>
+                    </div>
+                    
+                    <!-- Inventory Status -->
+                    <div class="mt-2">
+                        <span class="text-sm font-medium text-gray-600">Status: 
+                            <span class="font-bold text-{{ product.inventoryStatus === 'INSTOCK' ? 'green' : product.inventoryStatus === 'LOWSTOCK' ? 'orange' : 'red' }}">
+                                {{ product.inventoryStatus }}
+                            </span>
+                        </span>
+                    </div>
+                    
+                    <!-- Rating -->
+                    <div class="flex items-center mt-1">
+                        <span class="font-medium text-sm text-gray-600">Rating: </span>
+                        <span class="font-bold text-yellow-500 ml-1">{{ product.rating }} ★</span>
+                    </div>
+
+                     <!-- Update Quantity -->
+                     <div class="mt-4">
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" [(ngModel)]="product.quantity" min="0" [value]="0" placeholder="0" class="p-inputtext w-1/4">
+                    </div>
+
+                </div>
+        
+                <!-- Buttons -->
+                <ng-template pTemplate="footer">
+                    <div class="flex gap-3 mt-4">
+                        <p-button label="Ajouter au panier" severity="primary" (onClick)="onAddToCart(product)" class="flex-grow"></p-button>
+                        <p-button label="Modifier" severity="secondary" (onClick)="onUpdate(product)" class="flex-grow"></p-button>
+                        <p-button label="Supprimer" severity="danger" (onClick)="onDelete(product)" class="flex-grow"></p-button>
+                    </div>
+                </ng-template>
+            </div>
+            <ng-template pTemplate="footer">
+                <div class="flex gap-3 mt-1">
+                    <p-button label="Ajouter au panier " severity="primary" (onClick)="onAddToCart(product)" class="flex-grow" />
+                    <p-button label="Modifier" severity="secondary" (onClick)="onUpdate(product)"/>
+                    <p-button label="Supprimer" severity="danger" (onClick)="onDelete(product)" />
+                </div>
+            </ng-template>
+        </p-card>
+    </ng-template>
+</p-dataView>
+
+<p-dialog [(visible)]="isDialogVisible"
+    [style]="{ width: '50vw' }"
+    header="Ajout/Edition produit">
+    <app-product-form
+        [product]="editedProduct()"
+        (save)="onSave($event)"
+        (cancel)="onCancel()"
+
+    />
+</p-dialog>
